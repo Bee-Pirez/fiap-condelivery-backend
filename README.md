@@ -66,7 +66,7 @@
 
     ```sh
     git clone https://github.com/Bee-Pirez/fiap-condelivery-ms.git
-    cd planner
+    cd fiap-condelivery-ms
     ```
 
 
