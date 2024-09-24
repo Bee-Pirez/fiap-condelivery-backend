@@ -1,5 +1,10 @@
 # :package:Condelivery 
 
+<img
+  src="./assets/logoIcon.svg"
+  style="height: 100px; margin: 10px 0"
+/>
+
 <p>Backend do Condelivery, usando arquitetura de microsservicos com SpringBoot.</p>
 <p>O Condelivery é um sistema de entregas exclusivo para condomínios. A solução visa facilitar o recebimento e a gestão de encomendas, oferecendo uma plataforma web e móvel para os moradores.</p>
 
@@ -14,10 +19,13 @@
 - <p><b>Config Infra</b> <a href=""> Link do repositorio</a></p>
 - <p><b>Discovery</b> </p>
 - <p><b>Gateway</b> (com Spring Cloud) </p>
-- <p>Micro Serviço de <b>pedido</b></p>
+- <p>Micro Serviço de <b>produto </b>:</p>
+<img
+  src="./assets/ProdutosRelacionamento.png"
+/>
 - <p>Micro Serviço de <b>autenticação</b> </p>
 - <p>Micro Serviço de <b>Usuário</b> </p>
-- <p>Micro Serviço de <b>produto </b></p>
+- <p>Micro Serviço de <b>pedido</b></p>
 - <p>Micro Serviço de <b>pagamento</b> </p>
 
 ## :construction: Serviços em andamento:
