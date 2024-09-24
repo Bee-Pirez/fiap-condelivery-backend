@@ -56,7 +56,7 @@
 - **Lombok**: Biblioteca para geração de código repetitivo (boilerplate).
 - **Docker**:  Plataforma para criação e gerenciamento de contêineres.
 - **Amazon S3**:  Serviço de armazenamento em nuvem da AWS que permite o armazenamento e recuperação de grandes dados.
-- ** Amazon RDS (Relational Database Service)** (MySQL): : Serviço gerenciado de banco de dados relacional na nuvem.
+- **Amazon RDS** (Relational Database Service -> MySQL): Serviço gerenciado de banco de dados relacional na nuvem.
 - **Amazon ECS (Elastic Container Service) com Fargate**: Serviço gerenciado de orquestração de contêineres que permite executar aplicações Docker sem a necessidade de gerenciar a infraestrutura de contêineres subjacente. Hospedagem e gerenciamento dos contêineres que compõem os microserviços do sistema.
 - **AWS CloudFormation**:  Serviço da AWS que facilita a modelagem e o provisionamento de todos os recursos de infraestrutura.  Provisionamento e gerenciamento da infraestrutura de nuvem, como instâncias EC2, balanceadores de carga, bancos de dados RDS, redes e outras configurações de infraestrutura.
 
