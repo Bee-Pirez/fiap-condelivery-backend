@@ -1,7 +1,12 @@
 # :package:Condelivery 
 
+<img
+  src="./assets/logoIcon.svg"
+  style="height: 100px; margin: 10px 0"
+/>
+
 <p>Backend do Condelivery, usando arquitetura de microsservicos com SpringBoot.</p>
-<p>O Condelivery é um sistema de entregas exclusivo para condomínios. A solução visa facilitar o recebimento e a gestão de encomendas, oferecendo uma plataforma web e móvel para os moradores.</p>
+<p>O Condelivery é um projeto acadêmico de um sistema de entregas exclusivo para condomínios. A solução visa facilitar o recebimento e a gestão de encomendas, oferecendo uma plataforma web e móvel para os moradores.</p>
 
 * [Pitch]()
 * [Protótipo](https://www.figma.com/design/JKM6bqd7yQhenKmrgP8qcI/Condelivery?node-id=0-1&node-type=canvas&t=FIJrbOOBgEBK51w3-0)
@@ -14,10 +19,13 @@
 - <p><b>Config Infra</b> <a href=""> Link do repositorio</a></p>
 - <p><b>Discovery</b> </p>
 - <p><b>Gateway</b> (com Spring Cloud) </p>
-- <p>Micro Serviço de <b>pedido</b></p>
+- <p>Micro Serviço de <b>produto </b>:</p>
+<img
+  src="./assets/ProdutosRelacionamento.png"
+/>
 - <p>Micro Serviço de <b>autenticação</b> </p>
 - <p>Micro Serviço de <b>Usuário</b> </p>
-- <p>Micro Serviço de <b>produto </b></p>
+- <p>Micro Serviço de <b>pedido</b></p>
 - <p>Micro Serviço de <b>pagamento</b> </p>
 
 ## :construction: Serviços em andamento:
@@ -48,7 +56,7 @@
 - **Lombok**: Biblioteca para geração de código repetitivo (boilerplate).
 - **Docker**:  Plataforma para criação e gerenciamento de contêineres.
 - **Amazon S3**:  Serviço de armazenamento em nuvem da AWS que permite o armazenamento e recuperação de grandes dados.
-- ** Amazon RDS (Relational Database Service)** (MySQL): : Serviço gerenciado de banco de dados relacional na nuvem.
+- **Amazon RDS** (Relational Database Service -> MySQL): Serviço gerenciado de banco de dados relacional na nuvem.
 - **Amazon ECS (Elastic Container Service) com Fargate**: Serviço gerenciado de orquestração de contêineres que permite executar aplicações Docker sem a necessidade de gerenciar a infraestrutura de contêineres subjacente. Hospedagem e gerenciamento dos contêineres que compõem os microserviços do sistema.
 - **AWS CloudFormation**:  Serviço da AWS que facilita a modelagem e o provisionamento de todos os recursos de infraestrutura.  Provisionamento e gerenciamento da infraestrutura de nuvem, como instâncias EC2, balanceadores de carga, bancos de dados RDS, redes e outras configurações de infraestrutura.
 
