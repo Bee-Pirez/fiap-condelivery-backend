@@ -25,6 +25,9 @@
 />
 - <p>Micro Serviço de <b>autenticação</b> </p>
 - <p>Micro Serviço de <b>Usuário</b> </p>
+<img
+  src="./assets/UsuariosRelacionamento.png"
+/>
 - <p>Micro Serviço de <b>pedido</b></p>
 - <p>Micro Serviço de <b>pagamento</b> </p>
 
