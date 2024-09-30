@@ -1,0 +1,5 @@
+CREATE TABLE partners (
+    id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    img_url VARCHAR(255) NOT NULL
+);
