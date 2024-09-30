@@ -11,7 +11,7 @@
 * [Pitch]()
 * [Protótipo](https://www.figma.com/design/JKM6bqd7yQhenKmrgP8qcI/Condelivery?node-id=0-1&node-type=canvas&t=FIJrbOOBgEBK51w3-0)
 * [Front-end Mobile](https://github.com/andrade-tiago/condelivery.app)
-* [Front-end Web]([https://github.com/EduardoMeireles390/Condelivery](https://github.com/josiastavares/Condelivery-front-web))
+* [Front-end Web](https://github.com/josiastavares/Condelivery-front-web)
 
 
 ## :wrench: Serviços implementados:
