@@ -33,7 +33,7 @@
 <img
   src="./assets/ordersRelacionmento.png"
 />
-- <p>Micro Serviço de <b>pagamento</b> </p>
+- <p>Micro Serviço de <b>pagamento</b>(api mercado pago e cartão stripe) </p>
 
 ## :construction: Serviços em andamento:
 - <p>Micro Serviço de <b>Entrega</b> </p>
