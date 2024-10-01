@@ -29,6 +29,10 @@
   src="./assets/UsuariosRelacionamento.png"
 />
 - <p>Micro Serviço de <b>pedido</b></p>
+
+<img
+  src="./assets/OrdersRelacionamento.png"
+/>
 - <p>Micro Serviço de <b>pagamento</b> </p>
 
 ## :construction: Serviços em andamento:
