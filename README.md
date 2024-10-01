@@ -31,7 +31,7 @@
 - <p>Micro Serviço de <b>pedido</b></p>
 
 <img
-  src="./assets/OrdersRelacionamento.png"
+  src="./assets/PedidosRelacionamento.png"
 />
 - <p>Micro Serviço de <b>pagamento</b> </p>
 
