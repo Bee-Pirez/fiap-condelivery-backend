@@ -8,7 +8,7 @@
 <p>Backend do Condelivery, usando arquitetura de microsservicos com SpringBoot.</p>
 <p>O Condelivery é um projeto acadêmico de um sistema de entregas exclusivo para condomínios. A solução visa facilitar o recebimento e a gestão de encomendas, oferecendo uma plataforma web e móvel para os moradores.</p>
 
-* [Pitch]()
+* Pitch: [YouTube](https://www.youtube.com/watch?v=QaElNAv6Ne0)
 * [Protótipo](https://www.figma.com/design/JKM6bqd7yQhenKmrgP8qcI/Condelivery?node-id=0-1&node-type=canvas&t=FIJrbOOBgEBK51w3-0)
 * [Front-end Mobile](https://github.com/andrade-tiago/condelivery.app)
 * [Front-end Web](https://github.com/josiastavares/Condelivery-front-web)
