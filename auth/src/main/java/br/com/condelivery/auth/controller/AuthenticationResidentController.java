@@ -30,9 +30,24 @@ public class AuthenticationResidentController {
         var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var authentication = manager.authenticate(authenticationToken);
 
-        var tokenJWT = tokenService.genarateToken((Resident) authentication.getPrincipal());
+        var tokenJWT = tokenService.generateToken((Resident) authentication.getPrincipal());
 
         return ResponseEntity.ok(new JWTTokenData(tokenJWT));
+
+        /*try{
+            var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            var authentication = manager.authenticate(authenticationToken);
+
+            var tokenJWT = tokenService.genarateToken((Resident) authentication.getPrincipal());
+
+            return ResponseEntity.ok(new JWTTokenData(tokenJWT));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+         */
+
     }
 
     @GetMapping(value = "/search")
@@ -44,4 +59,5 @@ public class AuthenticationResidentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
 }
