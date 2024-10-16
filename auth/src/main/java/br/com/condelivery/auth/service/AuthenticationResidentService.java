@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import org.slf4j.Logger;
@@ -19,6 +20,9 @@ public class AuthenticationResidentService implements UserDetailsService {
 
     @Autowired
     private UserFeignClient userFeignClient;
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public Resident findByEmail(String email) {
         Resident user = userFeignClient.findByEmail(email).getBody();
@@ -40,5 +44,11 @@ public class AuthenticationResidentService implements UserDetailsService {
         logger.info("Email found:" + username);
         return resident;
     }
+
+    /*public boolean isPasswordValid(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+     */
 
 }

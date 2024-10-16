@@ -6,6 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "residents")
@@ -19,8 +24,7 @@ public class Resident {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @NotBlank
@@ -30,7 +34,7 @@ public class Resident {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "cpf", nullable = false, unique = true)
+    @Column(name = "cpf", unique = true)
     private String cpf;
 
     @Column(name = "is_deliveryman", nullable = false)
@@ -39,13 +43,11 @@ public class Resident {
     @Column(name = "img_url")
     private String imgUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "condominium_id")
-    private Condominium condominium;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    @Column(name = "block")
-    private String block;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
-    @Column(name = "apartment")
-    private String apartment;
+
 }

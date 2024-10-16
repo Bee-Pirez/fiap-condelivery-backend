@@ -1,12 +1,12 @@
 CREATE TABLE condominiums (
     id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    telephone VARCHAR(45) UNIQUE NOT NULL,
+    name VARCHAR(255),
+    telephone VARCHAR(45) UNIQUE,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    img_url VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
+    password VARCHAR(255),
+    img_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     address_id BIGINT,
     FOREIGN KEY (address_id) REFERENCES addresses(id)
 );

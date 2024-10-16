@@ -5,6 +5,8 @@ import br.com.condelivery.auth.dto.JWTTokenData;
 import br.com.condelivery.auth.model.Resident;
 import br.com.condelivery.auth.service.AuthenticationResidentService;
 import br.com.condelivery.auth.service.ResidentTokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +27,23 @@ public class AuthenticationResidentController {
     @Autowired
     private ResidentTokenService tokenService;
 
+    private static Logger logger = LoggerFactory.getLogger(AuthenticationResidentService.class);
+
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody AuthenticationData data) {
-        var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var authentication = manager.authenticate(authenticationToken);
+        try{
+            var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            var authentication = manager.authenticate(authenticationToken);
 
-        var tokenJWT = tokenService.generateToken((Resident) authentication.getPrincipal());
+            var tokenJWT = tokenService.generateToken((Resident) authentication.getPrincipal());
 
-        return ResponseEntity.ok(new JWTTokenData(tokenJWT));
+            logger.info("Token JWT gerado: " + tokenJWT);
+            return ResponseEntity.ok(new JWTTokenData(tokenJWT));
+        } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
 
         /*try{
             var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
@@ -50,7 +61,19 @@ public class AuthenticationResidentController {
 
     }
 
-    @GetMapping(value = "/search")
+    @GetMapping("/validate")
+    public ResponseEntity<String> validateToken(@RequestParam("token") String token) {
+        try {
+            String subject = tokenService.getSubject(token);
+
+            return ResponseEntity.ok("Token is valid for subject: " + subject + tokenService.dataExpiracao());
+        } catch (RuntimeException e) {
+            logger.error("Error validating token: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    /*@GetMapping(value = "/search")
     public ResponseEntity<Resident> findByEmail(@RequestParam String email) {
         try {
             Resident resident = service.findByEmail(email);
@@ -59,5 +82,7 @@ public class AuthenticationResidentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+     */
 
 }

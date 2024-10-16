@@ -11,14 +11,36 @@ import java.util.function.Predicate;
 public class ValidatorRouter {
 
     private static final List<String> OPEN_API_ENDPOINTS = List.of(
-            "/auth/auth/login",
-            "/auth/auth/search",
-            "/auth/eureka",
-            "/auth/products/partners"
+            "/auth/login",
+            "/auth/register",
+            "/eureka"
     );
 
-    public Predicate<ServerHttpRequest> isSecured = request ->
-            OPEN_API_ENDPOINTS
+    public Predicate<ServerHttpRequest> isSecured = request -> {
+        boolean secured = OPEN_API_ENDPOINTS
                 .stream()
-                .noneMatch(uri -> request.getURI().getPath().contains(uri));
+                .noneMatch(uri -> request.getURI().getPath().startsWith(uri));
+
+        System.out.println("Rota: " + request.getURI().getPath() + " Protegida: " + secured);
+        return secured;
+    };
+
 }
+
+    /*private static final List<String> OPEN_API_ENDPOINTS = List.of("/auth/login", "/auth/register", "/Eureka");
+
+    public Predicate<ServerHttpRequest> isSecured = request -> {
+        boolean isOpenApiEndpoint = OPEN_API_ENDPOINTS.stream()
+                .anyMatch(uri -> request.getURI().getPath().contains(uri));
+
+        // Se for um endpoint aberto, não é protegido
+        boolean secured = !isOpenApiEndpoint;
+
+        System.out.println("Rota: " + request.getURI().getPath() + " Protegida: " + secured);
+        return secured;
+    };
+
+
+}
+
+     */

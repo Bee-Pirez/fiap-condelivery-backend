@@ -7,24 +7,29 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.apache.http.HttpHeaders;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
+
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.util.UriComponentsBuilder;
+
 import reactor.core.publisher.Mono;
+
+
+import org.slf4j.Logger;
+
 
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationFilter.class);
 
     @Autowired
     private ValidatorRouter router;
@@ -33,41 +38,34 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     private String secret;
 
     public AuthenticationFilter() {
-        super(AuthenticationFilter.Config.class);
+        super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            if (exchange.getRequest().getURI().getPath().startsWith("/auth/")) {
-                return chain.filter(exchange); // Permite acesso sem validação
-            }
+            ServerHttpRequest request = exchange.getRequest();
 
-            if (router.isSecured.test(exchange.getRequest())) {
-                // Verifica se o header Authorization está presente
-                if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                    return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authorization header not present"));
+            if (router.isSecured.test(request)) {
+                if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+                    return onError(exchange, "Missing authorization header", HttpStatus.UNAUTHORIZED);
                 }
 
-                String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+                String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
                 if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                    authHeader = authHeader.substring(7);
+                    authHeader = authHeader.substring(7); // Remove "Bearer "
+                } else {
+                    return onError(exchange, "Invalid authorization header format", HttpStatus.UNAUTHORIZED);
                 }
 
                 try {
-                    DecodedJWT decodedJWT = validateToken(authHeader);
+                    // Verifica o token JWT
+                    DecodedJWT decodedJWT = verifyToken(authHeader);
                     String username = decodedJWT.getClaim("name").asString();
-                    boolean isDeliveryMan = decodedJWT.getClaim("profile").asBoolean();
 
-                    ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
-                            .header("name", username)
-                            //.header("isDeliveryMan", Boolean.toString(isDeliveryMan))
-                            //.header("role", isDeliveryMan ? "ROLE_DELIVERYMAN" : "ROLE_RESIDENT")
-                            .build();
-
-                    return chain.filter(exchange.mutate().request(modifiedRequest).build());
+                    return chain.filter(exchange);
                 } catch (Exception e) {
-                    return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Acesso negado", e));
+                    return onError(exchange, "Invalid or expired token", HttpStatus.UNAUTHORIZED);
                 }
             }
 
@@ -75,13 +73,21 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         };
     }
 
-    private DecodedJWT validateToken(String token) {
+    private Mono<Void> onError(ServerWebExchange exchange, String message, HttpStatus status) {
+        ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(status);
+        return response.setComplete();
+    }
+
+    public DecodedJWT verifyToken(String tokenJWT) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            JWTVerifier verifier = JWT.require(algorithm).withIssuer("API Condelivery").build();
-            return verifier.verify(token);
+            return JWT.require(algorithm)
+                    .withIssuer("API Condelivery")
+                    .build()
+                    .verify(tokenJWT);
         } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token inválido ou expirado");
+            throw new RuntimeException("Invalid JWT token", exception);
         }
     }
 
@@ -89,3 +95,4 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     }
 }
+
