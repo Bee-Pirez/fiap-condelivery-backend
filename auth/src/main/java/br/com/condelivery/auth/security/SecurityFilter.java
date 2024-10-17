@@ -16,10 +16,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 
-@Component
-public class SecurityFilter extends OncePerRequestFilter {
+//@Component
+public class SecurityFilter /*extends OncePerRequestFilter*/ {
 
-    @Autowired
+    /*Autowired
     private ResidentTokenService tokenService;
 
     @Autowired
@@ -63,4 +63,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         return null;
     }
+
+     */
 }

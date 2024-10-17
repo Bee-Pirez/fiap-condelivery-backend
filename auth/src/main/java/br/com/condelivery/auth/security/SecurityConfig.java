@@ -1,5 +1,7 @@
 package br.com.condelivery.auth.security;
 
+import br.com.condelivery.auth.service.AuthenticationCondoService;
+import br.com.condelivery.auth.service.AuthenticationResidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +21,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    //@Autowired
+    //private SecurityFilter securityFilter;
+
     @Autowired
-    private SecurityFilter securityFilter;
+    private AuthenticationResidentService authenticationResidentService;
+
+    @Autowired
+    private AuthenticationCondoService authenticationCondoService;
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain residentSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -32,7 +40,20 @@ public class SecurityConfig {
                     req.requestMatchers("/auth/**").permitAll();
                     req.anyRequest().authenticated();
                 })
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .userDetailsService(authenticationResidentService)
+                .build();
+    }
+
+    @Bean
+    public SecurityFilterChain condoSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(req -> {
+                    req.requestMatchers("/auth/**").permitAll();
+                    req.anyRequest().authenticated();
+                })
+                //.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -46,4 +67,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

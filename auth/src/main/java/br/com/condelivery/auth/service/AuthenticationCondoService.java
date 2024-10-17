@@ -1,7 +1,9 @@
 package br.com.condelivery.auth.service;
 
 import br.com.condelivery.auth.feignClients.UserFeignClient;
+import br.com.condelivery.auth.model.Condominium;
 import br.com.condelivery.auth.model.Resident;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,11 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import org.slf4j.Logger;
-
-
 @Service
-public class AuthenticationResidentService implements UserDetailsService {
+public class AuthenticationCondoService implements UserDetailsService {
 
     private static Logger logger = LoggerFactory.getLogger(AuthenticationResidentService.class);
 
@@ -30,21 +29,21 @@ public class AuthenticationResidentService implements UserDetailsService {
             throw new UsernameNotFoundException("Username cannot be null or empty");
         }
 
-        Resident resident;
+        Condominium condominium;
         try {
-            resident = userFeignClient.findResidentByEmail(username).getBody();
+            condominium = userFeignClient.findCondominiumByEmail(username).getBody();
         } catch (Exception e) {
             logger.error("Erro ao tentar buscar residente pelo Feign Client para o email: {}", username, e);
             throw new UsernameNotFoundException("Erro ao buscar usuário: " + e.getMessage());
         }
 
-        if (resident == null) {
+        if (condominium == null) {
             logger.warn("Email não encontrado: {}", username);
             throw new UsernameNotFoundException("Email não encontrado");
         }
 
         logger.info("Residente autenticado com sucesso: {}", username);
-        return resident;
+        return condominium;
     }
 
 }
