@@ -33,12 +33,12 @@
 <img
   src="./assets/ordersRelacionmento.png"
 />
-- <p>Micro Serviço de <b>pagamento</b>(api mercado pago e cartão stripe) </p>
 
 ## :construction: Serviços em andamento:
 - <p>Micro Serviço de <b>Entrega</b> </p>
 - <p>Micro Serviço de <b>Avaliação</b> </p>
 - <p>Micro Serviço de <b>Chat com entregador</b> (Websocket)</p>
+- <p>Micro Serviço de <b>pagamento</b>(api mercado pago e cartão stripe) </p>
 
 ## :triangular_ruler: Design Patterns usados:
 <p>Data Transfer Objects</p>
