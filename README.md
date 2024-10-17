@@ -34,9 +34,10 @@
   src="./assets/ordersRelacionmento.png"
 />
 
-## :construction: Serviços em andamento:
 - <p>Micro Serviço de <b>Entrega</b> </p>
 - <p>Micro Serviço de <b>Avaliação</b> </p>
+
+## :construction: Serviços em andamento:
 - <p>Micro Serviço de <b>Chat com entregador</b> (Websocket)</p>
 - <p>Micro Serviço de <b>pagamento</b>(api mercado pago e cartão stripe) </p>
 
