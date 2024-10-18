@@ -51,7 +51,7 @@
 ## :gear: Tecnologias:
 - **Java 21**: Linguagem de programação principal.
 - **Spring Boot**: Framework para simplificação do desenvolvimento de aplicações Java.
-- **Spring Security**: Oferece autenticação e autorização em aplicações Java. Ele protege recursos sensíveis, garantindo que apenas usuários autenticados tenham acesso. Suporta autenticação básica, formulários e OAuth 2.0 para login social, além de permitir a utilização de JWT (JSON Web Tokens) para autenticação.
+- **Spring Security**: Oferece autenticação e autorização em aplicações Java. Ele protege recursos sensíveis, garantindo que apenas usuários autenticados tenham acesso. Utilização de JWT (JSON Web Tokens) para autenticação.
 - **Spring Data JPA**: Abstração da camada de persistência que simplifica o uso de JPA para interagir com bancos de dados.
 - **Spring Web**: Facilita a construção de aplicações web.
 - **Spring WebSockets**: Facilita a construção de aplicações web em tempo real, permitindo comunicação bidirecional entre o cliente e o servidor..
