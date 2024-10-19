@@ -60,7 +60,6 @@ public class ResidentService {
             throw new IllegalArgumentException("Resident with this email already exists");
         }
 
-        // Mapear o DTO para a entidade Resident
         Resident resident = modelMapper.map(residentDto, Resident.class);
         Resident savedResident = repository.save(resident);
 
@@ -68,7 +67,6 @@ public class ResidentService {
     }
 
     public ResidentDto updatePassword(Long id, @RequestBody @Valid ResidentDto residentDto) {
-        // Buscar o residente pelo ID
         Resident resident = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Resident not found"));
 
@@ -115,10 +113,8 @@ public class ResidentService {
     }
 
     public List<ResidentDto> getResidentsByCondominiumId(Long condominiumId) {
-        // Busca a lista de ResidentCondominium com base no condominiumId
         List<ResidentCondominium> residentCondominiums = residentCondominiumRepository.findByCondominiumId(condominiumId);
 
-        // Mapeia cada ResidentCondominium para ResidentDto
         return residentCondominiums.stream()
                 .map(residentCondominium -> modelMapper.map(residentCondominium.getResident(), ResidentDto.class))
                 .collect(Collectors.toList());
