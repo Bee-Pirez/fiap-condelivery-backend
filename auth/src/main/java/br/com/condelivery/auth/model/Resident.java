@@ -31,8 +31,8 @@ public class Resident implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        /*if (isDeliveryMan) {
+        //return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (isDeliveryMan) {
             return List.of(
                     new SimpleGrantedAuthority("ROLE_DELIVERYMAN"),
                     new SimpleGrantedAuthority("ROLE_RESIDENT")
@@ -41,8 +41,6 @@ public class Resident implements UserDetails {
             // O RESIDENT tem apenas a permissão de RESIDENT
             return List.of(new SimpleGrantedAuthority("ROLE_RESIDENT"));
         }
-
-         */
     }
 
     @Override

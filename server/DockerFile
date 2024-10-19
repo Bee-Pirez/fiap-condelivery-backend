@@ -1,0 +1,9 @@
+FROM maven:3.8.1-openjdk-17-slim AS build
+WORKDIR /app
+COPY ./server/pom.xml ./server/
+COPY ./server/src ./server/src
+RUN mvn clean package -f ./server/pom.xml
+
+FROM openjdk:17
+COPY --from=build ./server/target/server.jar ./server.jar
+ENTRYPOINT ["java", "-jar", "server.jar"]

@@ -1,7 +1,7 @@
 CREATE TABLE residents (
     id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
-    email VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     cpf VARCHAR(45),
     is_deliveryman BOOLEAN DEFAULT FALSE,

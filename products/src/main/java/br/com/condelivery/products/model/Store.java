@@ -29,6 +29,7 @@ public class Store {
 
     @NotNull
     @NotBlank
+    @Column(name = "img_url")
     private String imgUrl;
 
     @OneToMany(mappedBy = "store")

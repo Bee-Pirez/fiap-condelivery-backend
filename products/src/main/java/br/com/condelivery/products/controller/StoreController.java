@@ -20,4 +20,9 @@ public class StoreController {
     public List<StoreDto> getStoreByPartnerId(@PathVariable Long partnerId) {
         return storeService.getStoresByPartner(partnerId);
     }
+
+    @GetMapping("/{storeId}")
+    public StoreDto getStoreById(@PathVariable Long storeId) {
+        return storeService.getStoreById(storeId);
+    }
 }

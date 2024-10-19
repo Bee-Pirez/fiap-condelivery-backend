@@ -11,9 +11,15 @@ import java.util.function.Predicate;
 public class ValidatorRouter {
 
     private static final List<String> OPEN_API_ENDPOINTS = List.of(
-            "/auth/login",
-            "/auth/register",
-            "/eureka"
+            "/auth/login/resident",
+            "/auth/login/condo",
+            "/residents/register",
+            "/residents/search",
+            "/condominiums/register",
+            "/eureka",
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**"
     );
 
     public Predicate<ServerHttpRequest> isSecured = request -> {

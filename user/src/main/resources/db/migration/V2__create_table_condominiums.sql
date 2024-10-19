@@ -2,7 +2,7 @@ CREATE TABLE condominiums (
     id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     telephone VARCHAR(45) UNIQUE,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     img_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

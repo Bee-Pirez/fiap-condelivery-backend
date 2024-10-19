@@ -1,0 +1,7 @@
+CREATE TABLE items (
+    id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
+    quantity INT NOT NULL,
+    product_id BIGINT(20) NOT NULL,
+    order_id BIGINT(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

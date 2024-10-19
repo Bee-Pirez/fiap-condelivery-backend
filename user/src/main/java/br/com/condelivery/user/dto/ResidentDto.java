@@ -25,7 +25,4 @@ public class ResidentDto {
     private String cpf;
     private Boolean isDeliveryMan;
     private String imgUrl;
-    private String block;
-    private String apartment;
-    private Long condominiumId;
 }

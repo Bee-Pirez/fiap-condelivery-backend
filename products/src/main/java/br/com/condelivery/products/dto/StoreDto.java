@@ -8,5 +8,5 @@ import lombok.Setter;
 public class StoreDto {
     private Long id;
     private String name;
-    private String imageUrl;
+    private String imgUrl;
 }

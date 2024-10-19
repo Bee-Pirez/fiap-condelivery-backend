@@ -13,5 +13,5 @@ public class ResidentCondominiumDto {
     private Long residentId;
     private Long condominiumId;
     private String block;
-    private String apartmentNumber;
+    private String apartment;
 }

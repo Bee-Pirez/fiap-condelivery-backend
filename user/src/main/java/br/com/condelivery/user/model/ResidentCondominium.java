@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@IdClass(ResidentCondominiumId.class)
 public class ResidentCondominium implements Serializable {
     @Id
     @ManyToOne
@@ -26,5 +27,6 @@ public class ResidentCondominium implements Serializable {
     private Condominium condominium;
 
     private String block;
-    private String apartmentNumber;
+
+    private String apartment;
 }

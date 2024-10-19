@@ -2,6 +2,7 @@ package br.com.condelivery.products.service;
 
 import br.com.condelivery.products.dto.StoreDto;
 import br.com.condelivery.products.model.PartnerStore;
+import br.com.condelivery.products.model.Store;
 import br.com.condelivery.products.repository.PartnerStoreRepository;
 import br.com.condelivery.products.repository.StoreRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,5 +35,12 @@ public class StoreService {
         return partnerStores.stream()
                 .map(partnerStore -> modelMapper.map(partnerStore.getStore(), StoreDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public StoreDto getStoreById(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new EntityNotFoundException("Loja não encontrada com o ID: " + storeId));
+
+        return modelMapper.map(store, StoreDto.class);
     }
 }

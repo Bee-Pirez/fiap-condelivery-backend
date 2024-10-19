@@ -1,0 +1,7 @@
+CREATE TABLE deliveries (
+    id BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
+    status VARCHAR(255) NOT NULL,
+    order_id BIGINT(20) NOT NULL,
+    resident_id BIGINT(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

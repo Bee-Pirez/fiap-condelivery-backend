@@ -26,14 +26,13 @@ public class Condominium {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotBlank
     @Column(name = "telephone")
     private String telephone;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "img_url")
@@ -45,7 +44,7 @@ public class Condominium {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
 }

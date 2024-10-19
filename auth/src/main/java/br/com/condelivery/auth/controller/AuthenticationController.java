@@ -9,11 +9,17 @@ import br.com.condelivery.auth.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -35,55 +41,88 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationCondoService authenticationCondominiumService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     //@Autowired
     //private AuthenticationService authenticationService;
 
 
-    private static Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
 
     @PostMapping(value = "/login/resident")
-    public ResponseEntity<JWTTokenData> loginResident(@RequestBody AuthenticationData data) {
+    public ResponseEntity<?> loginResident(@RequestBody AuthenticationData data) {
         try {
-            var resident = authenticationResidentService.loadUserByUsername(data.email());
+            // Aqui, você deve garantir que está obtendo um Resident
+            Resident resident = (Resident) authenticationResidentService.loadUserByUsername(data.email());
+
+            // Verificação da senha
+            validatePassword(data.password(), resident.getPassword());
+
             var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var authentication = manager.authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            if (authentication.getPrincipal() instanceof Resident) {
-                var tokenJWT = residentTokenService.generateToken((Resident) authentication.getPrincipal());
-                logger.info("Token JWT gerado para residente: " + tokenJWT);
-                return ResponseEntity.ok(new JWTTokenData(tokenJWT));
-            } else {
-                return ResponseEntity.badRequest().body(new JWTTokenData("Autenticação falhou para residente."));
-            }
+            String token = residentTokenService.generateToken(resident);
+            return ResponseEntity.ok(new JWTTokenData(token));
         } catch (UsernameNotFoundException e) {
-            return ResponseEntity.badRequest().body(new JWTTokenData("Residente não encontrado."));
+            logger.error("Resident not found: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Resident não encontrado"));
+        } catch (BadCredentialsException e) {
+            logger.error("Invalid password: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Email ou senha inválidos."));
+        } catch (ClassCastException e) {
+            logger.error("Failed to cast UserDetails to Resident: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Erro interno no servidor."));
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new JWTTokenData(e.getMessage()));
+            logger.error("Authentication error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Ocorreu um erro durante a autenticação."));
         }
     }
 
     @PostMapping(value = "/login/condo")
-    public ResponseEntity<JWTTokenData> loginCondo(@RequestBody AuthenticationData data) {
+    public ResponseEntity<?> loginCondominium(@RequestBody AuthenticationData data) {
         try {
-            var condominium = authenticationCondominiumService.loadUserByUsername(data.email());
+            // Aqui, você deve garantir que está obtendo um Resident
+            Condominium condominium = (Condominium) authenticationCondominiumService.loadUserByUsername(data.email());
+
+            // Verificação da senha
+            validatePassword(data.password(), condominium.getPassword());
+
             var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var authentication = manager.authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            if (authentication.getPrincipal() instanceof Condominium) {
-                var tokenJWT = condoTokenService.generateToken((Condominium) authentication.getPrincipal());
-                logger.info("Token JWT gerado para condomínio: " + tokenJWT);
-                return ResponseEntity.ok(new JWTTokenData(tokenJWT));
-            } else {
-                return ResponseEntity.badRequest().body(new JWTTokenData("Autenticação falhou para condomínio."));
-            }
+            String token = condoTokenService.generateToken(condominium);
+            return ResponseEntity.ok(new JWTTokenData(token));
         } catch (UsernameNotFoundException e) {
-            return ResponseEntity.badRequest().body(new JWTTokenData("Condomínio não encontrado."));
+            logger.error("Resident not found: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Condominio não encontrado"));
+        } catch (BadCredentialsException e) {
+            logger.error("Invalid password: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Email ou senha inválidos."));
+        } catch (ClassCastException e) {
+            logger.error("Failed to cast UserDetails to Resident: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Erro interno no servidor."));
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new JWTTokenData(e.getMessage()));
+            logger.error("Authentication error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Ocorreu um erro durante a autenticação."));
         }
     }
+
+
+    private void validatePassword(String rawPassword, String encodedPassword) {
+        if (!passwordEncoder.matches(rawPassword, encodedPassword)) {
+            throw new BadCredentialsException("Invalid password");
+        }
+    }
+}
 
 
     /*@GetMapping("/validate")
@@ -112,4 +151,3 @@ public class AuthenticationController {
 
      */
 
-}

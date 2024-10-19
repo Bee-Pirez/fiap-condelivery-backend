@@ -31,6 +31,7 @@ public class Product {
     private Double price;
 
     @NotNull
+    @Column(name = "img_url")
     private String imgUrl;
 
     @ManyToOne
