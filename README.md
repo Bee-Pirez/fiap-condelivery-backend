@@ -16,7 +16,6 @@
 
 ## :wrench: Serviços implementados:
 - <p><b>ConfigServer</b> </p> 
-- <p><b>Config Infra</b> <a href=""> Link do repositorio</a></p>
 - <p><b>Discovery</b> </p>
 - <p><b>Gateway</b> (com Spring Cloud) </p>
 - <p>Micro Serviço de <b>produto </b>:</p>
