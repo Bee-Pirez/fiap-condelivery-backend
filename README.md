@@ -62,8 +62,6 @@
 - **Flyway**: Biblioteca para controle de versão do banco de dados (migrations).
 - **Lombok**: Biblioteca para geração de código repetitivo (boilerplate).
 
-
-
 ## 🚀 Instalação e Execução
 
 ### Pré-requisitos
